@@ -1,5 +1,5 @@
 # Configuration missing - Students to update
-version: '2'
+version: '3'
 
 services:
 
@@ -8,6 +8,11 @@ services:
       context: elasticsearch/
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elk
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     
@@ -18,6 +23,8 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    networks:
+      - elk
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
  
